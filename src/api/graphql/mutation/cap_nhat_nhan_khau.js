@@ -2,35 +2,44 @@ import React from "react";
 import { gql } from "graphql";
 import { useMutation } from "@apollo/client";
 import Form from "../../../components/Form";
-const TAO_NHAN_KHAU = gql`
-  mutation taoNhanKhau($input: inputTaoNhanKhau!) {
-    taoNhanKhau(input: $input) {
-      bietDanh
-      bietTiengDanToc
-      danToc
-      hoTen
-    }
-  }
+const CAP_NHAT_NHAN_KHAU = gql`
+  mutation capNhatNhanKhau($input: inputCapNhatNhanKhau!){
+capNhatNhanKhau(input: $input) {
+  bietDanh
+    bietTiengDanToc
+    danToc
+    hoTen
+    noiSinh
+    ID
+}
+}
 `;
 
-function TaoNhanKhau(){
+function CapNhatNhanKhau(){
   const listInput=[
-
     {
-    label:"Họ Tên",
-    name:"hoTen",
-    isRequired:true,
-    defaultValue:"",
-    type:"text",
-    placeHolder:'enter your name',
+      label:"ID",
+      name:"ID",
+      isRequired:true,
+      defaultValue:"",
+      type:"text",
+      placeHolder:'điền ID',
     },
     {
-    label:"Nghề nghiệp",
-    name:"ngheNghiep",
-    isRequired:true,
-    type:"text",
-    defaultValue:"không có",
-    placeHolder:'điền nghề nhiệp',
+      label:"Họ Tên",
+      name:"hoTen",
+      isRequired:true,
+      defaultValue:"",
+      type:"text",
+      placeHolder:'enter your name',
+    },
+    {
+      label:"Nghề nghiệp",
+      name:"ngheNghiep",
+      isRequired:true,
+      type:"text",
+      defaultValue:"không có",
+      placeHolder:'điền nghề nhiệp',
     },
     {
       label:"Biệt danh",
@@ -208,6 +217,38 @@ function TaoNhanKhau(){
       defaultValue:"không có",
       placeHolder:'điền trình độ',
     },     
+    {
+      label:"Ngày xóa",
+      name:"ngayXoa",
+      isRequired:true,
+      defaultValue:"",
+      type:"text",
+      placeHolder:'điền ngày xóa',
+    },
+    {
+      label:"ID người xóa",
+      name:"idNguoiXoa",
+      isRequired:true,
+      defaultValue:"",
+      type:"text",
+      placeHolder:'điền ID',
+    },
+    {
+      label:"Lý do xóa",
+      name:"lyDoXoa",
+      isRequired:true,
+      defaultValue:"",
+      type:"text",
+      placeHolder:'điền lý do xóa',
+    },
+    {
+      label:"Ghi chú",
+      name:"ghiChu",
+      isRequired:true,
+      defaultValue:"",
+      type:"text",
+      placeHolder:'điền ghi chú',
+    },
     ];
 
     let arrayName = listInput.map(item =>{
@@ -215,7 +256,7 @@ function TaoNhanKhau(){
     }).join(',')
  
 
-const [createUser, { loading}] = useMutation(TAO_NHAN_KHAU)
+const [updateUser, { loading}] = useMutation(CAP_NHAT_NHAN_KHAU)
 if (loading) {
     return <h1> DATA IS LOADING...</h1>;
   }
@@ -223,11 +264,10 @@ if (loading) {
     return (
         <div>
           <div>
-            <Form listInput={listInput} />
-          
+          <Form listInput={listInput} />
             <button
               onClick={() => {
-                createUser({
+                updateUser({
                   variables: {
                     input: arrayName
                   },
@@ -236,14 +276,11 @@ if (loading) {
                
               }}
             >
-              Tạo nhân khẩu
+              Cập nhật nhân khẩu
             </button>
           </div>
           </div>
   )
             }
  
-            export default TaoNhanKhau
-            
-
-
+            export default CapNhatNhanKhau
